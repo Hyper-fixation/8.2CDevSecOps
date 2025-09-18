@@ -18,6 +18,21 @@ pipeline {
 		    steps {
 			    bat 'npm test || exit /b 0'
 			}
+			post {
+				always {
+					emailext(
+						to: 's221245018@deakin.edu.au',
+						subject: "Jenkins - Run Tests - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+						from: 'harleyjack96@gmail.com',
+						mimeType: 'text/html',
+						body: """<p><b>Stage:</b> Run Tests</p>
+	  							 <p><b>Status:</b> ${currentBuild.currentResult}</p>
+		   						 <p><b>Job:</b> ${env.JOB_NAME} #${env.BUILD_NUMBER}</p>
+								 <p><a href='${env.BUILD_URL}console'>View Console Log></a></p>""",
+						attachLog: true
+					)
+				}
+			}
 		}
 
 		stage('Generate Coverage Report') {
@@ -30,6 +45,21 @@ pipeline {
 		    steps {
 		        bat 'npm audit || exit /b 0'
 		    }
+			post {
+				always {
+					emailext(
+						to: 's221245018@deakin.edu.au',
+						subject: "Jenkins - Security Scan - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+						from: 'harleyjack96@gmail.com',
+						mimeType: 'text/html',
+						body: """<p><b>Stage:</b> NPM Audit (Security Scan)</p>
+	  							 <p><b>Status:</b> ${currentBuild.currentResult}</p>
+		   						 <p><b>Job:</b> ${env.JOB_NAME} #${env.BUILD_NUMBER}</p>
+								 <p><a href='${env.BUILD_URL}console'>View Console Log></a></p>""",
+						attachLog: true
+					)
+				}
+			}
 	    }
     }
 }
