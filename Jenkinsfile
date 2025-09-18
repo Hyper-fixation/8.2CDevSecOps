@@ -22,6 +22,7 @@ pipeline {
 				always {
 					emailext(
 						to: 's221245018@deakin.edu.au',
+						cc: 'harleyjack96@gmail.com',
 						subject: "Jenkins - Run Tests - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
 						from: 'harleyjack96@gmail.com',
 						mimeType: 'text/html',
@@ -49,6 +50,7 @@ pipeline {
 				always {
 					emailext(
 						to: 's221245018@deakin.edu.au',
+						cc: 'harleyjack96@gmail.com',
 						subject: "Jenkins - Security Scan - ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
 						from: 'harleyjack96@gmail.com',
 						mimeType: 'text/html',
